@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Agenda de Contactos</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <h1>Agenda de Contactos</h1>
   
-  <!-- Formulario para agregar contactos -->
   <form id="formContacto">
     <input type="text" id="nombre" placeholder="Nombre" required>
     <input type="text" id="telefono" placeholder="Teléfono" required>
@@ -15,23 +15,20 @@
     <button type="submit">Agregar</button>
   </form>
   
-  <!-- Lista de contactos -->
   <ul id="listaContactos"></ul>
 
   <script>
     const form = document.getElementById("formContacto");
     const lista = document.getElementById("listaContactos");
 
-    // Función para cargar contactos desde el backend
     async function cargarContactos() {
       const res = await fetch("/api/contactos");
       const data = await res.json();
       lista.innerHTML = "";
       data.forEach(c => {
         const li = document.createElement("li");
-        li.textContent = `${c.nombre} - ${c.telefono} - ${c.correo} `;
+        li.textContent = `${c.nombre} - ${c.telefono} - ${c.correo}`;
 
-        // Botón eliminar
         const btnEliminar = document.createElement("button");
         btnEliminar.textContent = "Eliminar";
         btnEliminar.onclick = async () => {
@@ -44,7 +41,6 @@
       });
     }
 
-    // Evento para agregar contacto
     form.addEventListener("submit", async e => {
       e.preventDefault();
       const contacto = {
@@ -57,11 +53,10 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(contacto)
       });
-      form.reset(); // limpiar formulario
+      form.reset();
       cargarContactos();
     });
 
-    // Cargar contactos al iniciar
     cargarContactos();
   </script>
 </body>
