@@ -12,23 +12,26 @@ let contactos = [];
 
 // Rutas API
 app.get("/api/contactos", (req, res) => {
+  console.log("📋 Listando contactos"); // Log para listar
   res.json(contactos);
 });
 
 app.post("/api/contactos", (req, res) => {
   const { nombre, telefono, correo } = req.body;
   contactos.push({ nombre, telefono, correo });
+  console.log(`✅ Contacto agregado: ${nombre}, Tel: ${telefono}, Correo: ${correo}`);
   res.json({ mensaje: "Contacto agregado", contactos });
 });
 
 app.delete("/api/contactos/:nombre", (req, res) => {
   const nombre = req.params.nombre;
   contactos = contactos.filter(c => c.nombre !== nombre);
+  console.log(`🗑️ Contacto eliminado: ${nombre}`);
   res.json({ mensaje: "Contacto eliminado", contactos });
 });
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
 
